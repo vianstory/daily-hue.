@@ -35,9 +35,33 @@
             font-family: 'Space Mono', monospace;
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.3s;
         }
 
-        /* --- MARQUEE --- */
+        /* SCREENSHOT MODE TOGGLES */
+        body.screenshot-mode .marquee-container,
+        body.screenshot-mode header,
+        body.screenshot-mode .control-area,
+        body.screenshot-mode .story-section,
+        body.screenshot-mode footer,
+        body.screenshot-mode #screenshot-btn {
+            display: none !important;
+        }
+
+        #watermark {
+            display: none;
+            position: fixed;
+            bottom: 40px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Dela Gothic One', cursive;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            opacity: 0.5;
+        }
+
+        body.screenshot-mode #watermark { display: block; }
+
         .marquee-container {
             background: var(--ink-black);
             color: #fff;
@@ -48,7 +72,7 @@
         }
         .marquee-content {
             display: inline-block;
-            animation: marquee 20s linear infinite;
+            animation: marquee 25s linear infinite;
             font-size: 0.9rem;
             text-transform: uppercase;
         }
@@ -57,7 +81,6 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* --- HEADER --- */
         header {
             text-align: center;
             padding: 30px 20px 20px;
@@ -73,7 +96,6 @@
             letter-spacing: -1px;
         }
 
-        /* --- GRID --- */
         .grid-container {
             display: grid;
             grid-template-columns: 1fr 300px;
@@ -101,7 +123,7 @@
 
         .palette-display {
             display: flex;
-            height: 350px;
+            height: 380px;
         }
 
         .swatch {
@@ -125,24 +147,39 @@
 
         .control-area {
             padding: 25px;
-            text-align: center;
-            background: repeating-linear-gradient(45deg, #fff, #fff 10px, #f0f0f0 10px, #f0f0f0 20px);
+            display: flex;
+            gap: 10px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 10px, #fbfbfb 10px, #fbfbfb 20px);
             border-top: var(--border-thick);
         }
 
-        button#generate-btn {
-            background: var(--popeye-yellow);
+        button {
             border: var(--border-thick);
             font-family: 'Dela Gothic One', cursive;
-            font-size: 1.2rem;
-            padding: 15px 30px;
-            width: 100%;
             cursor: pointer;
             box-shadow: 4px 4px 0px var(--ink-black);
-            color: var(--ink-black);
+            transition: all 0.1s;
         }
 
-        /* --- RED CARD --- */
+        button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--ink-black);
+        }
+
+        #generate-btn {
+            background: var(--popeye-yellow);
+            font-size: 1.2rem;
+            padding: 15px;
+            flex: 2;
+        }
+
+        #screenshot-btn {
+            background: #fff;
+            font-size: 0.8rem;
+            padding: 15px;
+            flex: 1;
+        }
+
         .red-card {
             background: var(--popeye-red);
             color: #fff;
@@ -154,13 +191,36 @@
         }
         .date-display { font-family: 'Dela Gothic One', cursive; font-size: 1.5rem; }
 
-        /* --- FOOTER & BMC --- */
+        .story-section {
+            grid-column: 1 / -1;
+            margin-top: 40px;
+            border-top: 2px solid var(--ink-black);
+            padding-top: 30px;
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            text-align: left;
+        }
+        .story-column { flex: 1; min-width: 280px; }
+        .story-column h2 {
+            font-family: 'Dela Gothic One', cursive;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            background: var(--ink-black);
+            color: #fff;
+            display: inline-block;
+            padding: 5px 10px;
+            transform: rotate(-1deg);
+        }
+        .story-column p { line-height: 1.6; font-size: 0.95rem; margin-bottom: 15px; }
+
         footer {
-            margin-top: 50px;
+            margin-top: 60px;
             padding: 40px 20px;
             text-align: center;
             border-top: var(--border-thick);
             background: #fff;
+            padding-bottom: env(safe-area-inset-bottom, 40px);
         }
         .bmc-link {
             display: inline-block;
@@ -172,26 +232,22 @@
             font-family: 'Dela Gothic One', cursive;
             font-size: 0.9rem;
             border: 2px solid var(--ink-black);
-        }
-        .bmc-link:active {
-            background: var(--popeye-yellow);
-            color: var(--ink-black);
+            box-shadow: 4px 4px 0px var(--popeye-yellow);
         }
 
-        /* --- MOBILE --- */
         @media (max-width: 900px) {
             .grid-container { grid-template-columns: 1fr; }
-            .palette-display { flex-direction: column; height: 450px; }
+            .palette-display { flex-direction: column; height: 480px; }
             .swatch { border-right: none; border-bottom: var(--border-thick); height: 33.3%; }
             .red-card { display: flex; align-items: center; justify-content: space-between; }
         }
     </style>
 </head>
-<body>
+<body onclick="exitScreenshot()">
 
     <div class="marquee-container">
         <div class="marquee-content">
-            CITY BOY STYLE CHECK • WHAT COLOR SHOULD I WEAR TODAY? • 3 COLOR COMBO CHALLENGE • CITY BOY STYLE CHECK • 
+            CITY BOY STYLE CHECK • WHAT COLOR SHOULD I WEAR TODAY? • 3 COLOR COMBO CHALLENGE • CITY BOY STYLE CHECK •
         </div>
     </div>
 
@@ -202,10 +258,11 @@
 
     <div class="grid-container">
         <main class="challenge-box">
-            <div class="box-header"><span>Dictionary of Color Combinations</span><span>VOL. 01</span></div>
+            <div class="box-header"><span>Dictionary of Color Combinations</span><span>VOL. 02</span></div>
             <div class="palette-display" id="palette"></div>
             <div class="control-area">
-                <button id="generate-btn" onclick="generatePalette()">RANDOMIZE</button>
+                <button id="generate-btn" onclick="generatePalette(event)">RANDOMIZE</button>
+                <button id="screenshot-btn" onclick="enterScreenshot(event)">STORY MODE</button>
             </div>
         </main>
 
@@ -214,7 +271,21 @@
             <div class="date-display" id="date-display"></div>
             <div style="font-size: 0.8rem;">Jakarta, ID</div>
         </aside>
+
+        <div class="story-section">
+            <div class="story-column">
+                <h2>THE CONCEPT</h2>
+                <p><strong>"What color should I wear today?"</strong></p>
+                <p>This is for those looking to expand their style horizons. While monochrome is timeless, sometimes you want to play with color but don't know where to begin.</p>
+            </div>
+            <div class="story-column">
+                <p>Inspired by Sanzo Wada’s <em>A Dictionary of Color Combinations</em>, this tool generates three harmonious hues to guide your daily uniform.</p>
+                <p>Your challenge: get your combo, experiment, and build your outfit.</p>
+            </div>
+        </div>
     </div>
+
+    <div id="watermark">WWW.VIANSTORY.GITHUB.IO</div>
 
     <footer>
         <p>MADE BY VIAN IN JAKARTA</p>
@@ -228,11 +299,22 @@
             [{name:"English Red",hex:"#AB4B52"},{name:"Ocious Salmon",hex:"#FF8E88"},{name:"Mushroom",hex:"#7E766C"}],
             [{name:"Cobalt Green",hex:"#3D8C69"},{name:"Pale Lemon",hex:"#FFF8C9"},{name:"Slate Grey",hex:"#404040"}],
             [{name:"Navy Blue",hex:"#000080"},{name:"Mustard",hex:"#FFDB58"},{name:"Cream",hex:"#FFFDD0"}],
-            [{name:"Burnt Orange",hex:"#CC5500"},{name:"Olive Drab",hex:"#6B8E23"},{name:"Khaki",hex:"#F0E68C"}],
-            [{name:"Violet Blue",hex:"#625D96"},{name:"Sand",hex:"#C2B280"},{name:"White",hex:"#FFFFFF"}]
+            [{name:"Olive Drab",hex:"#556B2F"},{name:"Tobacco",hex:"#734A12"},{name:"Off White",hex:"#FAF9F6"}],
+            [{name:"Slate Blue",hex:"#708090"},{name:"Stone",hex:"#A9A9A9"},{name:"Safety Orange",hex:"#FF6700"}],
+            [{name:"Forest Green",hex:"#228B22"},{name:"Khaki",hex:"#C3B091"},{name:"Burgundy",hex:"#800020"}],
+            [{name:"Workwear Blue",hex:"#2B65EC"},{name:"Cement",hex:"#E5E4E2"},{name:"Charcoal",hex:"#36454F"}],
+            [{name:"Sage",hex:"#9C9C81"},{name:"Chocolate",hex:"#3D1E1E"},{name:"Dusty Pink",hex:"#DCAE96"}],
+            [{name:"Ivy Navy",hex:"#102733"},{name:"Ecru",hex:"#F5F5DC"},{name:"Crimson",hex:"#DC143C"}],
+            [{name:"Teal Blue",hex:"#008080"},{name:"Caramel",hex:"#AF6E4D"},{name:"Paper",hex:"#F1F1F1"}],
+            [{name:"Shadow",hex:"#252525"},{name:"Washed Denim",hex:"#5D8AA8"},{name:"Yellow",hex:"#FFFF00"}],
+            [{name:"Army Green",hex:"#4B5320"},{name:"Tan",hex:"#D2B48C"},{name:"Signal White",hex:"#F4F4F4"}],
+            [{name:"Indigo",hex:"#4B0082"},{name:"Sand",hex:"#C2B280"},{name:"Terracotta",hex:"#E2725B"}],
+            [{name:"Dusty Blue",hex:"#5A7D9A"},{name:"Brick",hex:"#8C2B05"},{name:"Light Grey",hex:"#DCDCDC"}],
+            [{name:"Pine",hex:"#01796F"},{name:"Amber",hex:"#FFBF00"},{name:"Bone",hex:"#E3DAC9"}]
         ];
 
-        function generatePalette() {
+        function generatePalette(e) {
+            if (e) e.stopPropagation();
             const paletteContainer = document.getElementById('palette');
             const selectedPalette = palettes[Math.floor(Math.random() * palettes.length)];
             paletteContainer.innerHTML = '';
@@ -243,6 +325,15 @@
                 swatch.innerHTML = `<div class="swatch-info"><strong>${color.name}</strong><br>${color.hex}</div>`;
                 paletteContainer.appendChild(swatch);
             });
+        }
+
+        function enterScreenshot(e) {
+            e.stopPropagation();
+            document.body.classList.add('screenshot-mode');
+        }
+
+        function exitScreenshot() {
+            document.body.classList.remove('screenshot-mode');
         }
 
         function setDate() {
