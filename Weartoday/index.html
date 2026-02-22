@@ -12,7 +12,6 @@
     <link rel="apple-touch-icon" href="icon.svg">
 
     <title>THE DAILY HUE | City Boy Color Palette</title>
-    <meta name="description" content="What Color Should I Wear Today? A daily style randomizer inspired by Japanese City Boy aesthetics.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,6 +37,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* --- MARQUEE --- */
         .marquee-container {
             background: var(--ink-black);
             color: #fff;
@@ -46,36 +46,34 @@
             white-space: nowrap;
             border-bottom: var(--border-thick);
         }
-        
         .marquee-content {
             display: inline-block;
             animation: marquee 20s linear infinite;
             font-size: 0.9rem;
             text-transform: uppercase;
         }
-        
         @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
 
+        /* --- HEADER --- */
         header {
             text-align: center;
             padding: 30px 20px 20px;
-            position: relative;
         }
-
         h1.logo {
             font-family: 'Dela Gothic One', cursive;
-            font-size: clamp(2.5rem, 12vw, 9rem);
+            font-size: clamp(2.5rem, 12vw, 8rem);
             line-height: 0.9;
             color: var(--popeye-yellow);
             -webkit-text-stroke: 2px var(--ink-black);
             text-shadow: 4px 4px 0px var(--ink-black);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             letter-spacing: -1px;
         }
 
+        /* --- GRID --- */
         .grid-container {
             display: grid;
             grid-template-columns: 1fr 300px;
@@ -89,8 +87,6 @@
             background: #fff;
             border: var(--border-thick);
             box-shadow: var(--shadow-hard);
-            display: flex;
-            flex-direction: column;
         }
 
         .box-header {
@@ -98,8 +94,7 @@
             color: #fff;
             padding: 10px 15px;
             font-weight: bold;
-            font-size: 0.85rem;
-            text-transform: uppercase;
+            font-size: 0.8rem;
             display: flex;
             justify-content: space-between;
         }
@@ -107,7 +102,6 @@
         .palette-display {
             display: flex;
             height: 350px;
-            width: 100%;
         }
 
         .swatch {
@@ -117,7 +111,6 @@
             justify-content: flex-end;
             padding: 15px;
             border-right: var(--border-thick);
-            transition: background-color 0.3s ease;
         }
         .swatch:last-child { border-right: none; }
 
@@ -125,23 +118,15 @@
             background: #fff;
             border: 2px solid var(--ink-black);
             padding: 8px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             box-shadow: 3px 3px 0px rgba(0,0,0,0.2);
             transform: rotate(-2deg);
         }
 
-        .swatch:nth-child(2) .swatch-info { transform: rotate(2deg); }
-
         .control-area {
-            padding: 20px;
+            padding: 25px;
             text-align: center;
-            background: repeating-linear-gradient(
-                45deg,
-                #fff,
-                #fff 10px,
-                #f0f0f0 10px,
-                #f0f0f0 20px
-            );
+            background: repeating-linear-gradient(45deg, #fff, #fff 10px, #f0f0f0 10px, #f0f0f0 20px);
             border-top: var(--border-thick);
         }
 
@@ -152,19 +137,12 @@
             font-size: 1.2rem;
             padding: 15px 30px;
             width: 100%;
-            max-width: 400px;
             cursor: pointer;
             box-shadow: 4px 4px 0px var(--ink-black);
-            text-transform: uppercase;
             color: var(--ink-black);
-            border-radius: 8px;
         }
 
-        button#generate-btn:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px var(--ink-black);
-        }
-
+        /* --- RED CARD --- */
         .red-card {
             background: var(--popeye-red);
             color: #fff;
@@ -172,123 +150,40 @@
             box-shadow: var(--shadow-hard);
             padding: 25px;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            height: fit-content;
         }
+        .date-display { font-family: 'Dela Gothic One', cursive; font-size: 1.5rem; }
 
-        .red-card-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            line-height: 56px;
-        }
-
-        .date-display {
-            font-family: 'Dela Gothic One', cursive;
-            font-size: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .jp-text {
-            font-size: 0.9rem;
-            margin-top: 10px;
-            opacity: 0.9;
-            font-family: "Helvetica Neue", sans-serif;
-        }
-
-        .story-section {
-            grid-column: 1 / -1;
-            margin-top: 20px;
-            border-top: 2px solid var(--ink-black);
-            padding-top: 20px;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .story-column {
-            flex: 1;
-            min-width: 280px;
-        }
-
-        .story-column h2 {
-            font-family: 'Dela Gothic One', cursive;
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            background: var(--ink-black);
-            color: #fff;
-            display: inline-block;
-            padding: 5px 10px;
-            transform: rotate(-1deg);
-        }
-
-        .story-column p {
-            line-height: 1.5;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-
+        /* --- FOOTER & BMC --- */
         footer {
-            margin-top: 40px;
-            padding: 20px;
+            margin-top: 50px;
+            padding: 40px 20px;
             text-align: center;
-            font-size: 0.75rem;
             border-top: var(--border-thick);
             background: #fff;
-            padding-bottom: env(safe-area-inset-bottom, 20px);
+        }
+        .bmc-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: var(--ink-black);
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Dela Gothic One', cursive;
+            font-size: 0.9rem;
+            border: 2px solid var(--ink-black);
+        }
+        .bmc-link:active {
+            background: var(--popeye-yellow);
+            color: var(--ink-black);
         }
 
-        /* --- MOBILE OPTIMIZATIONS --- */
+        /* --- MOBILE --- */
         @media (max-width: 900px) {
-            .grid-container {
-                grid-template-columns: 1fr;
-                padding: 10px;
-            }
-            
-            .palette-display {
-                flex-direction: column;
-                height: 400px; /* Taller on mobile for nice stacking */
-            }
-            
-            .swatch {
-                height: 33.33%;
-                border-right: none;
-                border-bottom: var(--border-thick);
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                padding: 10px 20px;
-            }
-            
-            .swatch:last-child { 
-                border-bottom: none; 
-            }
-            
-            .swatch-info { 
-                transform: none !important; 
-                text-align: right;
-            }
-            
-            .red-card {
-                flex-direction: row;
-                justify-content: space-around;
-                text-align: left;
-                padding: 15px;
-            }
-            
-            .red-card-icon {
-                margin-bottom: 0;
-            }
-            
-            .jp-text {
-                margin-top: 0;
-                text-align: right;
-            }
+            .grid-container { grid-template-columns: 1fr; }
+            .palette-display { flex-direction: column; height: 450px; }
+            .swatch { border-right: none; border-bottom: var(--border-thick); height: 33.3%; }
+            .red-card { display: flex; align-items: center; justify-content: space-between; }
         }
     </style>
 </head>
@@ -296,136 +191,66 @@
 
     <div class="marquee-container">
         <div class="marquee-content">
-            CITY BOY STYLE CHECK • WHAT COLOR SHOULD I WEAR TODAY? • 3 COLOR COMBO CHALLENGE • CITY BOY STYLE CHECK • WHAT COLOR SHOULD I WEAR TODAY? • 
+            CITY BOY STYLE CHECK • WHAT COLOR SHOULD I WEAR TODAY? • 3 COLOR COMBO CHALLENGE • CITY BOY STYLE CHECK • 
         </div>
     </div>
 
     <header>
         <h1 class="logo">THE DAILY HUE</h1>
-        <p style="font-weight: bold; letter-spacing: 1px; font-size: 0.85rem;">COLOR COMBO CHALLENGE</p>
+        <p style="font-weight: bold; font-size: 0.8rem;">COLOR COMBO CHALLENGE</p>
     </header>
 
     <div class="grid-container">
-        
         <main class="challenge-box">
-            <div class="box-header">
-                <span>Dictionary of Colors</span>
-                <span>VOL. 01</span>
-            </div>
-            
-            <div class="palette-display" id="palette">
-                </div>
-
+            <div class="box-header"><span>Dictionary of Color Combinations</span><span>VOL. 01</span></div>
+            <div class="palette-display" id="palette"></div>
             <div class="control-area">
                 <button id="generate-btn" onclick="generatePalette()">RANDOMIZE</button>
             </div>
         </main>
 
         <aside class="red-card">
-            <div class="red-card-icon">R</div>
-            <div>
-                <div class="date-display" id="date-display">
-                    </div>
-            </div>
-            <div class="jp-text">
-                Today's Vibe<br>
-                Jakarta, ID
-            </div>
+            <div style="font-size: 2.5rem; border: 2px solid #fff; border-radius: 50%; width: 50px; height: 50px; line-height: 45px;">R</div>
+            <div class="date-display" id="date-display"></div>
+            <div style="font-size: 0.8rem;">Jakarta, ID</div>
         </aside>
-
-        <div class="story-section">
-            <div class="story-column">
-                <h2>THE CONCEPT</h2>
-                <p><strong>"What Color Should I Wear Today?"</strong></p>
-                <p>This is for people who want to explore their style. Monochrome is good, timeless, but sometimes you want a bit of fun with colors but don't know where to start.</p>
-            </div>
-            <div class="story-column">
-                <p>Inspired by the famous <em>Japanese Dictionary of Color Combinations</em> (Sanzo Wada), this tool is a randomizer that generates 3 harmonious colors.</p>
-                <p>Your challenge: Visit daily, get your combo, and build an outfit.</p>
-            </div>
-        </div>
-
     </div>
 
     <footer>
-        MADE BY VIAN IN JAKARTA
+        <p>MADE BY VIAN IN JAKARTA</p>
+        <a href="https://buymeacoffee.com/vianstory" target="_blank" class="bmc-link">
+            ☕ BUY ME A COFFEE
+        </a>
     </footer>
 
     <script>
         const palettes = [
-            [
-                { name: "English Red", hex: "#AB4B52" },
-                { name: "Ocious Salmon", hex: "#FF8E88" },
-                { name: "Mushroom", hex: "#7E766C" }
-            ],
-            [
-                { name: "Cobalt Green", hex: "#3D8C69" },
-                { name: "Pale Lemon", hex: "#FFF8C9" },
-                { name: "Slate Grey", hex: "#404040" }
-            ],
-            [
-                { name: "Navy Blue", hex: "#000080" },
-                { name: "Mustard", hex: "#FFDB58" },
-                { name: "Cream", hex: "#FFFDD0" }
-            ],
-            [
-                { name: "Burnt Orange", hex: "#CC5500" },
-                { name: "Olive Drab", hex: "#6B8E23" },
-                { name: "Khaki", hex: "#F0E68C" }
-            ],
-            [
-                { name: "Violet Blue", hex: "#625D96" },
-                { name: "Sand", hex: "#C2B280" },
-                { name: "White", hex: "#FFFFFF" }
-            ],
-             [
-                { name: "Chocolate", hex: "#7B3F00" },
-                { name: "Sky Blue", hex: "#87CEEB" },
-                { name: "Off White", hex: "#FAF9F6" }
-            ],
-             [
-                { name: "Signal Red", hex: "#E60000" },
-                { name: "Charcoal", hex: "#333333" },
-                { name: "Grey", hex: "#D3D3D3" }
-            ]
+            [{name:"English Red",hex:"#AB4B52"},{name:"Ocious Salmon",hex:"#FF8E88"},{name:"Mushroom",hex:"#7E766C"}],
+            [{name:"Cobalt Green",hex:"#3D8C69"},{name:"Pale Lemon",hex:"#FFF8C9"},{name:"Slate Grey",hex:"#404040"}],
+            [{name:"Navy Blue",hex:"#000080"},{name:"Mustard",hex:"#FFDB58"},{name:"Cream",hex:"#FFFDD0"}],
+            [{name:"Burnt Orange",hex:"#CC5500"},{name:"Olive Drab",hex:"#6B8E23"},{name:"Khaki",hex:"#F0E68C"}],
+            [{name:"Violet Blue",hex:"#625D96"},{name:"Sand",hex:"#C2B280"},{name:"White",hex:"#FFFFFF"}]
         ];
 
         function generatePalette() {
             const paletteContainer = document.getElementById('palette');
-            const randomIndex = Math.floor(Math.random() * palettes.length);
-            const selectedPalette = palettes[randomIndex];
-
+            const selectedPalette = palettes[Math.floor(Math.random() * palettes.length)];
             paletteContainer.innerHTML = '';
-
             selectedPalette.forEach(color => {
                 const swatch = document.createElement('div');
                 swatch.className = 'swatch';
                 swatch.style.backgroundColor = color.hex;
-
-                swatch.innerHTML = `
-                    <div class="swatch-info">
-                        <strong>${color.name}</strong><br>
-                        ${color.hex}
-                    </div>
-                `;
+                swatch.innerHTML = `<div class="swatch-info"><strong>${color.name}</strong><br>${color.hex}</div>`;
                 paletteContainer.appendChild(swatch);
             });
         }
 
         function setDate() {
-            const dateElement = document.getElementById('date-display');
             const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth() + 1;
-            const day = now.getDate();
-            
-            dateElement.innerHTML = `${year}年<br>${month}月${day}日`;
+            document.getElementById('date-display').innerHTML = `${now.getFullYear()}年<br>${now.getMonth() + 1}月${now.getDate()}日`;
         }
 
-        window.onload = function() {
-            generatePalette();
-            setDate();
-        };
+        window.onload = () => { generatePalette(); setDate(); };
     </script>
 </body>
 </html>
