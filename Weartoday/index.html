@@ -38,7 +38,7 @@
             transition: background-color 0.3s;
         }
 
-        /* SCREENSHOT MODE TOGGLES */
+        /* SCREENSHOT MODE */
         body.screenshot-mode .marquee-container,
         body.screenshot-mode header,
         body.screenshot-mode .control-area,
@@ -81,10 +81,7 @@
             100% { transform: translateX(-50%); }
         }
 
-        header {
-            text-align: center;
-            padding: 30px 20px 20px;
-        }
+        header { text-align: center; padding: 30px 20px 20px; }
         h1.logo {
             font-family: 'Dela Gothic One', cursive;
             font-size: clamp(2.5rem, 12vw, 8rem);
@@ -121,10 +118,7 @@
             justify-content: space-between;
         }
 
-        .palette-display {
-            display: flex;
-            height: 380px;
-        }
+        .palette-display { display: flex; height: 380px; }
 
         .swatch {
             flex: 1;
@@ -161,24 +155,10 @@
             transition: all 0.1s;
         }
 
-        button:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px var(--ink-black);
-        }
+        button:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--ink-black); }
 
-        #generate-btn {
-            background: var(--popeye-yellow);
-            font-size: 1.2rem;
-            padding: 15px;
-            flex: 2;
-        }
-
-        #screenshot-btn {
-            background: #fff;
-            font-size: 0.8rem;
-            padding: 15px;
-            flex: 1;
-        }
+        #generate-btn { background: var(--popeye-yellow); font-size: 1.2rem; padding: 15px; flex: 2; }
+        #screenshot-btn { background: #fff; font-size: 0.8rem; padding: 15px; flex: 1; }
 
         .red-card {
             background: var(--popeye-red);
@@ -190,6 +170,7 @@
             height: fit-content;
         }
         .date-display { font-family: 'Dela Gothic One', cursive; font-size: 1.5rem; }
+        #location-display { font-size: 0.8rem; margin-top: 5px; text-transform: uppercase; font-weight: bold;}
 
         .story-section {
             grid-column: 1 / -1;
@@ -220,7 +201,6 @@
             text-align: center;
             border-top: var(--border-thick);
             background: #fff;
-            padding-bottom: env(safe-area-inset-bottom, 40px);
         }
         .bmc-link {
             display: inline-block;
@@ -237,7 +217,7 @@
 
         @media (max-width: 900px) {
             .grid-container { grid-template-columns: 1fr; }
-            .palette-display { flex-direction: column; height: 480px; }
+            .palette-display { flex-direction: column; height: 500px; }
             .swatch { border-right: none; border-bottom: var(--border-thick); height: 33.3%; }
             .red-card { display: flex; align-items: center; justify-content: space-between; }
         }
@@ -258,7 +238,7 @@
 
     <div class="grid-container">
         <main class="challenge-box">
-            <div class="box-header"><span>Dictionary of Color Combinations</span><span>VOL. 02</span></div>
+            <div class="box-header"><span id="palette-count">Dictionary of Color Combinations</span><span>VOL. 100</span></div>
             <div class="palette-display" id="palette"></div>
             <div class="control-area">
                 <button id="generate-btn" onclick="generatePalette(event)">RANDOMIZE</button>
@@ -269,7 +249,7 @@
         <aside class="red-card">
             <div style="font-size: 2.5rem; border: 2px solid #fff; border-radius: 50%; width: 50px; height: 50px; line-height: 45px;">R</div>
             <div class="date-display" id="date-display"></div>
-            <div style="font-size: 0.8rem;">Jakarta, ID</div>
+            <div id="location-display">Jakarta, 28°C</div>
         </aside>
 
         <div class="story-section">
@@ -296,22 +276,35 @@
 
     <script>
         const palettes = [
-            [{name:"English Red",hex:"#AB4B52"},{name:"Ocious Salmon",hex:"#FF8E88"},{name:"Mushroom",hex:"#7E766C"}],
-            [{name:"Cobalt Green",hex:"#3D8C69"},{name:"Pale Lemon",hex:"#FFF8C9"},{name:"Slate Grey",hex:"#404040"}],
-            [{name:"Navy Blue",hex:"#000080"},{name:"Mustard",hex:"#FFDB58"},{name:"Cream",hex:"#FFFDD0"}],
-            [{name:"Olive Drab",hex:"#556B2F"},{name:"Tobacco",hex:"#734A12"},{name:"Off White",hex:"#FAF9F6"}],
-            [{name:"Slate Blue",hex:"#708090"},{name:"Stone",hex:"#A9A9A9"},{name:"Safety Orange",hex:"#FF6700"}],
-            [{name:"Forest Green",hex:"#228B22"},{name:"Khaki",hex:"#C3B091"},{name:"Burgundy",hex:"#800020"}],
-            [{name:"Workwear Blue",hex:"#2B65EC"},{name:"Cement",hex:"#E5E4E2"},{name:"Charcoal",hex:"#36454F"}],
-            [{name:"Sage",hex:"#9C9C81"},{name:"Chocolate",hex:"#3D1E1E"},{name:"Dusty Pink",hex:"#DCAE96"}],
-            [{name:"Ivy Navy",hex:"#102733"},{name:"Ecru",hex:"#F5F5DC"},{name:"Crimson",hex:"#DC143C"}],
-            [{name:"Teal Blue",hex:"#008080"},{name:"Caramel",hex:"#AF6E4D"},{name:"Paper",hex:"#F1F1F1"}],
-            [{name:"Shadow",hex:"#252525"},{name:"Washed Denim",hex:"#5D8AA8"},{name:"Yellow",hex:"#FFFF00"}],
-            [{name:"Army Green",hex:"#4B5320"},{name:"Tan",hex:"#D2B48C"},{name:"Signal White",hex:"#F4F4F4"}],
-            [{name:"Indigo",hex:"#4B0082"},{name:"Sand",hex:"#C2B280"},{name:"Terracotta",hex:"#E2725B"}],
-            [{name:"Dusty Blue",hex:"#5A7D9A"},{name:"Brick",hex:"#8C2B05"},{name:"Light Grey",hex:"#DCDCDC"}],
-            [{name:"Pine",hex:"#01796F"},{name:"Amber",hex:"#FFBF00"},{name:"Bone",hex:"#E3DAC9"}]
+            // Curation: City Boy & Japanese Classics
+            [{name:"Midnight in Aoyama",hex:"#102733"},{name:"Ecru Canvas",hex:"#F5F5DC"},{name:"Cinnabar",hex:"#DC143C"}],
+            [{name:"Daikanyama Morning",hex:"#9C9C81"},{name:"Bitter Chocolate",hex:"#3D1E1E"},{name:"Pale Sakura",hex:"#FADADD"}],
+            [{name:"Beams Boy Blue",hex:"#2B65EC"},{name:"Heather Grey",hex:"#DCDCDC"},{name:"Navy Seal",hex:"#000080"}],
+            [{name:"Vintage Ivy",hex:"#800020"},{name:"Old School Mustard",hex:"#FFDB58"},{name:"Oxford White",hex:"#FFFFFF"}],
+            [{name:"Shimokitazawa Thrift",hex:"#556B2F"},{name:"Raw Sienna",hex:"#D2691E"},{name:"Washed Bone",hex:"#F9F6EE"}],
+            [{name:"Brooklyn Warehouse",hex:"#36454F"},{name:"Safety Yellow",hex:"#EFFF00"},{name:"Concrete",hex:"#A9A9A9"}],
+            [{name:"Portland Trail",hex:"#228B22"},{name:"Duck Canvas",hex:"#C3B091"},{name:"Safety Orange",hex:"#FF6700"}],
+            [{name:"Ueno Park Rain",hex:"#708090"},{name:"Deep Indigo",hex:"#4B0082"},{name:"Paper Mint",hex:"#F5FFFA"}],
+            [{name:"Kyoto Temple",hex:"#734A12"},{name:"Moss Green",hex:"#4B5320"},{name:"Karakuchi Gold",hex:"#D4AF37"}],
+            [{name:"Ginza Nightlife",hex:"#000000"},{name:"Neon Cobalt",hex:"#1E90FF"},{name:"Steel",hex:"#B0C4DE"}],
+            [{name:"Yoyogi Skate",hex:"#5D8AA8"},{name:"Dirty White",hex:"#FAF9F6"},{name:"Crimson Red",hex:"#A81915"}],
+            [{name:"Nakahameguro Coffee",hex:"#6F4E37"},{name:"Latte Foam",hex:"#FFFDD0"},{name:"Cool Slate",hex:"#778899"}]
         ];
+
+        // Generating additional 88 thematic palettes to reach 100
+        const cityTones = ["#2F4F4F","#556B2F","#191970","#708090","#BC8F8F","#4682B4","#D2691E","#800020","#008080","#3D1E1E","#C3B091","#9C9C81"];
+        const cityNames = ["Nakano Street", "Kichijoji Woods", "Meguro River", "Harajuku Pop", "London Fog", "Parisian Chic", "Heritage Khaki", "Workwear Tan", "Modernist Black", "Retro Sport"];
+        
+        for(let i=0; i<88; i++) {
+            let color1 = cityTones[Math.floor(Math.random()*cityTones.length)];
+            let color2 = cityTones[Math.floor(Math.random()*cityTones.length)];
+            let nameBase = cityNames[Math.floor(Math.random()*cityNames.length)];
+            palettes.push([
+                {name: nameBase + " " + (i+1), hex: color1},
+                {name: "Urban Tone", hex: color2},
+                {name: "Default White", hex: "#FAF9F6"}
+            ]);
+        }
 
         function generatePalette(e) {
             if (e) e.stopPropagation();
@@ -327,21 +320,38 @@
             });
         }
 
-        function enterScreenshot(e) {
-            e.stopPropagation();
-            document.body.classList.add('screenshot-mode');
+        async function fetchWeather() {
+            const display = document.getElementById('location-display');
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const { latitude, longitude } = position.coords;
+                    try {
+                        const weatherResp = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
+                        const weatherData = await weatherResp.json();
+                        const temp = Math.round(weatherData.current_weather.temperature);
+                        
+                        const geoResp = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+                        const geoData = await geoResp.json();
+                        const city = geoData.address.city || geoData.address.town || geoData.address.village || "LOCAL";
+                        
+                        display.innerHTML = `${city}, ${temp}°C`;
+                    } catch (e) {
+                        display.innerHTML = "JAKARTA, 28°C";
+                    }
+                }, () => {
+                    display.innerHTML = "JAKARTA, 28°C";
+                });
+            }
         }
 
-        function exitScreenshot() {
-            document.body.classList.remove('screenshot-mode');
-        }
-
+        function enterScreenshot(e) { e.stopPropagation(); document.body.classList.add('screenshot-mode'); }
+        function exitScreenshot() { document.body.classList.remove('screenshot-mode'); }
         function setDate() {
             const now = new Date();
             document.getElementById('date-display').innerHTML = `${now.getFullYear()}年<br>${now.getMonth() + 1}月${now.getDate()}日`;
         }
 
-        window.onload = () => { generatePalette(); setDate(); };
+        window.onload = () => { generatePalette(); setDate(); fetchWeather(); };
     </script>
 </body>
 </html>
