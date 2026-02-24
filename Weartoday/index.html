@@ -38,7 +38,7 @@
             transition: background-color 0.3s;
         }
 
-        /* SCREENSHOT MODE */
+        /* SNAP & SHARE MODE */
         body.screenshot-mode .marquee-container,
         body.screenshot-mode header,
         body.screenshot-mode .control-area,
@@ -55,9 +55,9 @@
             width: 100%;
             text-align: center;
             font-family: 'Dela Gothic One', cursive;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             letter-spacing: 2px;
-            opacity: 0.5;
+            opacity: 0.4;
         }
 
         body.screenshot-mode #watermark { display: block; }
@@ -157,8 +157,8 @@
 
         button:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--ink-black); }
 
-        #generate-btn { background: var(--popeye-yellow); font-size: 1.2rem; padding: 15px; flex: 2; }
-        #screenshot-btn { background: #fff; font-size: 0.8rem; padding: 15px; flex: 1; }
+        #generate-btn { background: #fff; font-size: 1.2rem; padding: 15px; flex: 2; }
+        #screenshot-btn { background: var(--popeye-yellow); font-size: 0.8rem; padding: 15px; flex: 1; }
 
         .red-card {
             background: var(--popeye-red);
@@ -219,7 +219,7 @@
             .grid-container { grid-template-columns: 1fr; }
             .palette-display { flex-direction: column; height: 500px; }
             .swatch { border-right: none; border-bottom: var(--border-thick); height: 33.3%; }
-            .red-card { display: flex; align-items: center; justify-content: space-between; }
+            .red-card { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;}
         }
     </style>
 </head>
@@ -238,18 +238,18 @@
 
     <div class="grid-container">
         <main class="challenge-box">
-            <div class="box-header"><span id="palette-count">Dictionary of Color Combinations</span><span>VOL. 100</span></div>
+            <div class="box-header"><span>Dictionary of Color Combinations</span><span>VOL. 100</span></div>
             <div class="palette-display" id="palette"></div>
             <div class="control-area">
                 <button id="generate-btn" onclick="generatePalette(event)">RANDOMIZE</button>
-                <button id="screenshot-btn" onclick="enterScreenshot(event)">SHARE IT</button>
+                <button id="screenshot-btn" onclick="enterScreenshot(event)">SNAP & SHARE</button>
             </div>
         </main>
 
         <aside class="red-card">
-            <div style="font-size: 2.5rem; border: 2px solid #fff; border-radius: 50%; width: 50px; height: 50px; line-height: 45px;">R</div>
+            <div style="font-size: 2.5rem; border: 2px solid #fff; border-radius: 50%; width: 50px; height: 50px; line-height: 45px; margin: 0 auto 10px;">R</div>
             <div class="date-display" id="date-display"></div>
-            <div id="location-display">Jakarta, 28°C</div>
+            <div id="location-display">JAKARTA, 28°C</div>
         </aside>
 
         <div class="story-section">
@@ -265,7 +265,7 @@
         </div>
     </div>
 
-    <div id="watermark">WWW.VIANSTORY.GITHUB.IO</div>
+    <div id="watermark">CAPTURED VIA THE DAILY HUE</div>
 
     <footer>
         <p>MADE BY VIAN IN JAKARTA</p>
@@ -276,11 +276,10 @@
 
     <script>
         const palettes = [
-            // Curation: City Boy & Japanese Classics
             [{name:"Midnight in Aoyama",hex:"#102733"},{name:"Ecru Canvas",hex:"#F5F5DC"},{name:"Cinnabar",hex:"#DC143C"}],
             [{name:"Daikanyama Morning",hex:"#9C9C81"},{name:"Bitter Chocolate",hex:"#3D1E1E"},{name:"Pale Sakura",hex:"#FADADD"}],
             [{name:"Beams Boy Blue",hex:"#2B65EC"},{name:"Heather Grey",hex:"#DCDCDC"},{name:"Navy Seal",hex:"#000080"}],
-            [{name:"Vintage Ivy",hex:"#800020"},{name:"Old School Mustard",hex:"#FFDB58"},{name:"Oxford White",hex:"#FFFFFF"}],
+            [{name:"Vintage Ivy",hex:"#800020"},{name:"Old Mustard",hex:"#FFDB58"},{name:"Oxford White",hex:"#FFFFFF"}],
             [{name:"Shimokitazawa Thrift",hex:"#556B2F"},{name:"Raw Sienna",hex:"#D2691E"},{name:"Washed Bone",hex:"#F9F6EE"}],
             [{name:"Brooklyn Warehouse",hex:"#36454F"},{name:"Safety Yellow",hex:"#EFFF00"},{name:"Concrete",hex:"#A9A9A9"}],
             [{name:"Portland Trail",hex:"#228B22"},{name:"Duck Canvas",hex:"#C3B091"},{name:"Safety Orange",hex:"#FF6700"}],
@@ -288,21 +287,22 @@
             [{name:"Kyoto Temple",hex:"#734A12"},{name:"Moss Green",hex:"#4B5320"},{name:"Karakuchi Gold",hex:"#D4AF37"}],
             [{name:"Ginza Nightlife",hex:"#000000"},{name:"Neon Cobalt",hex:"#1E90FF"},{name:"Steel",hex:"#B0C4DE"}],
             [{name:"Yoyogi Skate",hex:"#5D8AA8"},{name:"Dirty White",hex:"#FAF9F6"},{name:"Crimson Red",hex:"#A81915"}],
-            [{name:"Nakahameguro Coffee",hex:"#6F4E37"},{name:"Latte Foam",hex:"#FFFDD0"},{name:"Cool Slate",hex:"#778899"}]
+            [{name:"Nakahameguro Coffee",hex:"#6F4E37"},{name:"Latte Foam",hex:"#FFFDD0"},{name:"Cool Slate",hex:"#778899"}],
+            [{name:"Rainy Day Ginza",hex:"#4682B4"},{name:"Wet Stone",hex:"#708090"},{name:"White Umbrellas",hex:"#FFFFFF"}],
+            [{name:"Shinjuku Gyoen",hex:"#2F4F4F"},{name:"Pale Moss",hex:"#BDB76B"},{name:"Cloudy Sky",hex:"#E6E6FA"}],
+            [{name:"Matcha in Uji",hex:"#556B2F"},{name:"Bamboo",hex:"#8FBC8F"},{name:"Soft Cream",hex:"#FFFDD0"}],
+            [{name:"Old Books in Jimbocho",hex:"#8B4513"},{name:"Aged Paper",hex:"#F5DEB3"},{name:"Ink Black",hex:"#1a1a1a"}]
         ];
 
-        // Generating additional 88 thematic palettes to reach 100
-        const cityTones = ["#2F4F4F","#556B2F","#191970","#708090","#BC8F8F","#4682B4","#D2691E","#800020","#008080","#3D1E1E","#C3B091","#9C9C81"];
-        const cityNames = ["Nakano Street", "Kichijoji Woods", "Meguro River", "Harajuku Pop", "London Fog", "Parisian Chic", "Heritage Khaki", "Workwear Tan", "Modernist Black", "Retro Sport"];
+        // Dynamic Generation for 100 Palettes
+        const tones = ["#2F4F4F","#556B2F","#191970","#708090","#BC8F8F","#4682B4","#D2691E","#800020","#008080","#3D1E1E","#C3B091","#9C9C81","#6F4E37","#BDB76B","#4B0082","#A81915"];
+        const names = ["Kamloops Hike", "Berlin Concrete", "Copenhagen Flat", "Seoul Neon", "Muji Aesthetic", "Heavy Cotton", "Corduroy Brown", "Chambray Blue", "Denim Indigo", "Vintage Fleece"];
         
-        for(let i=0; i<88; i++) {
-            let color1 = cityTones[Math.floor(Math.random()*cityTones.length)];
-            let color2 = cityTones[Math.floor(Math.random()*cityTones.length)];
-            let nameBase = cityNames[Math.floor(Math.random()*cityNames.length)];
+        for(let i=0; i<84; i++) {
             palettes.push([
-                {name: nameBase + " " + (i+1), hex: color1},
-                {name: "Urban Tone", hex: color2},
-                {name: "Default White", hex: "#FAF9F6"}
+                {name: names[i % names.length] + " " + (i+1), hex: tones[i % tones.length]},
+                {name: "Urban Secondary", hex: tones[(i+5) % tones.length]},
+                {name: "Base Neutral", hex: "#FAF9F6"}
             ]);
         }
 
@@ -329,18 +329,12 @@
                         const weatherResp = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
                         const weatherData = await weatherResp.json();
                         const temp = Math.round(weatherData.current_weather.temperature);
-                        
                         const geoResp = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
                         const geoData = await geoResp.json();
                         const city = geoData.address.city || geoData.address.town || geoData.address.village || "LOCAL";
-                        
                         display.innerHTML = `${city}, ${temp}°C`;
-                    } catch (e) {
-                        display.innerHTML = "JAKARTA, 28°C";
-                    }
-                }, () => {
-                    display.innerHTML = "JAKARTA, 28°C";
-                });
+                    } catch (e) { display.innerHTML = "JAKARTA, 28°C"; }
+                }, () => { display.innerHTML = "JAKARTA, 28°C"; });
             }
         }
 
